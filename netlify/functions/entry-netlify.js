@@ -33,7 +33,8 @@ export const handler = async (event, context) => {
 
                 try {
                     const dirtyURL = new URL(queryParams.url);
-                    const cleanedURL = await cleanLink(dirtyURL);
+                    const skipBv2av = queryParams.hasOwnProperty('nobv2av');
+                    const cleanedURL = await cleanLink(dirtyURL, false, { skipBv2av });
                     let responseText;
                     
                     if (queryParams.hasOwnProperty('title')) {

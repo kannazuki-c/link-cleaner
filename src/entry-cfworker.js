@@ -16,7 +16,8 @@ addEventListener('fetch', e => e.respondWith(
 
                 try {
                     const dirtyURL = new URL(requestURL.searchParams.get('url'));
-                    const cleanedURL = await cleanLink(dirtyURL);
+                    const skipBv2av = requestURL.searchParams.has('nobv2av');
+                    const cleanedURL = await cleanLink(dirtyURL, false, { skipBv2av });
                     let responseText;
                     if (requestURL.searchParams.has('title')) {
                         try {

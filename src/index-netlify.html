@@ -29,6 +29,11 @@
             <button id="clean">清洗</button>
             <button id="copy">复制</button>
         </p>
+        <p style="margin:.25rem 0">
+            <label style="cursor:pointer;user-select:none">
+                <input id="bv2av" type="checkbox" checked style="margin-right:.3rem">转换 BV 号为 AV 号
+            </label>
+        </p>
         <blockquote style="font-style:normal">
             <p id="title" style="margin:.5rem 0">TransparentLC/link-cleaner: 网站链接清洗器</p>
             <p style="margin:.5rem 0"><a id="cleaned" href="https://github.com/TransparentLC/link-cleaner" target="_blank" rel="noopener noreferrer">https://github.com/TransparentLC/link-cleaner</a></p>
@@ -127,6 +132,7 @@
         const $urlList = getElementById('url-list');
         const $modalCancel = getElementById('modal-cancel');
         const $modalClean = getElementById('modal-clean');
+        const $bv2av = getElementById('bv2av');
 
         // 从文本中提取所有 URL
         const extractUrls = text => {
@@ -153,6 +159,7 @@
             const requestUrl = new URL(cleanerUrl);
             requestUrl.searchParams.set('title', '');
             requestUrl.searchParams.set('url', url);
+            if (!$bv2av.checked) requestUrl.searchParams.set('nobv2av', '');
             
             fetch(requestUrl)
                 .then(r => {

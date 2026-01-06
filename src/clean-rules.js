@@ -428,12 +428,16 @@ export default [
         ),
     },
     {
-        name: 'Bilibili video',
+        // 清除 Bilibili 视频链接的跟踪参数（只在有参数时匹配）
+        name: 'Bilibili video (clean params)',
+        match: url => (url.hostname === 'www.bilibili.com' || url.hostname === 'm.bilibili.com') && /^\/video\/[Bb][Vv][A-HJ-NP-Za-km-z1-9]{10}\/?$/.test(url.pathname) && url.search !== '',
+        clean: cleanFactory.whitelist(new Set),
+    },
+    {
+        // BV 号转 AV 号（可选）
+        name: 'Bilibili video (bv2av)',
         match: url => (url.hostname === 'www.bilibili.com' || url.hostname === 'm.bilibili.com') && /^\/video\/[Bb][Vv][A-HJ-NP-Za-km-z1-9]{10}\/?$/.test(url.pathname),
-        clean: cleanFactory.chain(
-            cleanFactory.whitelist(new Set),
-            cleanFactory.bv2av,
-        ),
+        clean: cleanFactory.bv2av,
     },
     {
         name: 'Douyin short link',
